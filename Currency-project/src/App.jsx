@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { InputBox } from './components/Index'
-import usecurrencyinfo from './hooks/usecurrencyinfo'
+import useCurrencyInfo from './hooks/useCurrencyInfo'
 
 
 function App() {
@@ -8,7 +8,7 @@ const [amount,SetAmount]=useState(0)
 const[From,SetFrom]=useState("usd")
 const[To,setTo]=useState("inr")
 const[Converted,SetConverted] =useState(0)
-const currencyinfo=usecurrencyinfo(From) //our customize hook calling
+const currencyinfo= useCurrencyInfo(From) //our customize hook calling
 //y humko naa jo data milla hai vo objects ki form hai hai i.e key value pairs mein isliye humne objects ki key li hai hai  to get the value.
 const Option = Object.keys(currencyinfo)
 const swap=()=>{
@@ -19,14 +19,16 @@ const swap=()=>{
 
   
 }
-const convert =()=>{SetConverted=(amount*currencyinfo[To])}
+const convert =()=>{
+    SetConverted(amount*currencyinfo[To])
+}
 
 
  return (
         <div
             className="w-full h-screen flex flex-wrap justify-center items-center bg-cover bg-no-repeat"
             style={{
-                backgroundImage: `url('/workspaces/currency-project/Currency-project/src/sl_020622_4930_13.jpg')`,
+                backgroundImage: `url('https://img.freepik.com/free-vector/digital-money-transfer-technology-background_1017-17454.jpg?size=626&ext=jpg&uid=R106173945&ga=GA1.1.263133402.1696238158&semt=sph')`,
             }}
         >
             <div className="w-full">
@@ -44,7 +46,9 @@ const convert =()=>{SetConverted=(amount*currencyinfo[To])}
                                 amount={amount}
                                 currencyOptions={Option}
                                 oncurrencychange={(currency)=>SetAmount(amount)}
-                                selectcurrency={from}
+                                selectcurrency={From}
+
+                                OnAmountChange={(amount)=> SetAmount(amount)}
                                 
                             />
                         </div>
@@ -60,7 +64,7 @@ const convert =()=>{SetConverted=(amount*currencyinfo[To])}
                         <div className="w-full mt-1 mb-4">
                             <InputBox
                                 label="To"
-                                amount={amount}
+                                amount={Converted}
                                 currencyOptions={Option}
                                 onCurrencyChange={(currency) => setTo(currency)}
                             selectCurrency={From}
